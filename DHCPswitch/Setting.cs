@@ -20,8 +20,11 @@ namespace DHCPswitch
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            ConfigurationManager.AppSettings.Set("IP", textBox_IP.Text);
-            ConfigurationManager.AppSettings.Set("SubnetMask", textBox_Mask.Text);
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            configuration.AppSettings.Settings["IP"].Value = textBox_IP.Text;
+            configuration.AppSettings.Settings["SubnetMask"].Value = textBox_Mask.Text;
+            configuration.Save();
+
             MessageBox.Show("Setting Success");
             this.Close();
         }
