@@ -101,6 +101,7 @@
             this.Controls.Add(this.Label_IP);
             this.MaximizeBox = false;
             this.Name = "Setting";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
             this.ResumeLayout(false);
             this.PerformLayout();

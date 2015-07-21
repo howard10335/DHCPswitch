@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Windows.Forms;
+using System.Net;
 
 namespace DHCPswitch
 {
@@ -47,6 +48,31 @@ namespace DHCPswitch
                     //break foreach, only swith the first network adapter
                     break;
                 }
+            }
+        }
+
+        private void notifyIcon_MouseMove(object sender, MouseEventArgs e)
+        {
+            foreach (NetworkInterface adapter in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                //when the network adapter type is Ethernet and is using
+                if (adapter.NetworkInterfaceType.ToString().Equals("Ethernet") && adapter.OperationalStatus == OperationalStatus.Up)
+                {
+                    //show DHCP or current static ip on notifyIcon.Text
+                    if (adapter.GetIPProperties().GetIPv4Properties().IsDhcpEnabled)
+                    {
+                        notifyIcon.Text = "Current Status\nDHCP";
+                    }
+                    else
+                    {
+                        IPHostEntry ipEntry = Dns.GetHostEntry(Dns.GetHostName());
+                        IPAddress[] ipAddr = ipEntry.AddressList;
+                        notifyIcon.Text = "Current Status\n";
+                        notifyIcon.Text += ipAddr[ipAddr.Length - 1].ToString();
+                    }
+                }
+                //break foreach, only show the first network adapter
+                break;
             }
         }
 
