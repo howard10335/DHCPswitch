@@ -49,6 +49,7 @@ namespace DHCPswitch
                     break;
                 }
             }
+            MessageBox.Show("Success");
         }
 
         private void notifyIcon_MouseMove(object sender, MouseEventArgs e)
